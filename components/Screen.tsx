@@ -1,20 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Screen from "./Screen";
-import Buttons from "./Buttons";
 
-export default function Calculator() {
+interface Props {
+    text: string
+}
+
+export default function Screen(props: Props) {
     return (
         <View style={styles.container}>
-            <Screen />
-            <Buttons />
+            <Text style={styles.buttonText}>{props.text}</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0.8,
         backgroundColor: '#22252d',
     },
+    buttonText: {
+        fontSize: 22,
+        color: '#fff',
+    }
 });
