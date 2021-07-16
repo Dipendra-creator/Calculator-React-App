@@ -7,10 +7,11 @@ interface Props {
     name: string
     onPress: (key: string) => void
 }
-export default function PressableButton(props: Props) {
+
+export default function PressableButton({onPress, name, Button, styleText}: Props) {
     return (
-        <Pressable onPress={() => props.onPress(props.name)} style={props.Button || styles.Button} >
-            <Text style={props.styleText ? [styles.buttonText, props.styleText] : styles.buttonText}>{props.name}</Text>
+        <Pressable onPress={() => onPress(name)} style={Button || styles.Button}>
+            <Text style={styleText ? [styles.buttonText, styleText] : styles.buttonText}>{name}</Text>
         </Pressable>
     );
 }
