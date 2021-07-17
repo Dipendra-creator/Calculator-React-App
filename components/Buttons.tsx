@@ -21,6 +21,7 @@ export default function Buttons({onChange}: Props) {
             onChange('')
         } else {
             setKeys((keys) => {
+                    const specialKeys = [ '%', '/', 'x', '-', '+', '='];
                     onChange(keys + key)
                     return keys + key
                 }
@@ -32,6 +33,7 @@ export default function Buttons({onChange}: Props) {
         <View style={styles.buttonComponent}>
             <View style={styles.leftSideButtons}>
 
+                {/* AC, DEL, %, ÷ */}
                 <PressableButton
                     name="AC"
                     styleText={styles.functionColor}
@@ -52,33 +54,63 @@ export default function Buttons({onChange}: Props) {
                 />
 
                 <PressableButton
-                    name="÷"
+                    name="/"
                     styleText={styles.operationColor}
                     onPress={logPress}
                 />
 
-                <PressableButton name="7" onPress={logPress}/>
-                <PressableButton name="8" onPress={logPress}/>
-                <PressableButton name="9" onPress={logPress}/>
+                {/* 7, 8, 9, × */}
+                <PressableButton
+                    name="7"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="8"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="9"
+                    onPress={logPress}
+                />
 
                 <PressableButton
-                    name="×"
+                    name="x"
                     styleText={styles.operationColor}
                     onPress={logPress}
                 />
 
-                <PressableButton name="4" onPress={logPress}/>
-                <PressableButton name="5" onPress={logPress}/>
-                <PressableButton name="6" onPress={logPress}/>
+                {/* 4, 5, 6, - */}
+                <PressableButton
+                    name="4"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="5"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="6"
+                    onPress={logPress}
+                />
 
                 <PressableButton
-                    name="−"
+                    name="-"
                     styleText={styles.operationColor}
                     onPress={logPress}/>
 
-                <PressableButton name="1" onPress={logPress}/>
-                <PressableButton name="2" onPress={logPress}/>
-                <PressableButton name="3" onPress={logPress}/>
+                {/* 1, 2, 3, + */}
+                <PressableButton
+                    name="1"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="2"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="3"
+                    onPress={logPress}
+                />
 
                 <PressableButton
                     name="+"
@@ -86,14 +118,21 @@ export default function Buttons({onChange}: Props) {
                     onPress={logPress}
                 />
 
+                {/* H, 0, ., = */}
                 <PressableButton
                     name="H"
                     styleText={styles.functionColor}
                     onPress={logPress}
                 />
 
-                <PressableButton name="0" onPress={logPress}/>
-                <PressableButton name="." onPress={logPress}/>
+                <PressableButton
+                    name="0"
+                    onPress={logPress}
+                />
+                <PressableButton
+                    name="."
+                    onPress={logPress}
+                />
 
                 <PressableButton
                     name="="
@@ -138,6 +177,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#fff',
     },
-    functionColor: {color: "#26c8ad"},
-    operationColor: {color: "#b26164"}
+    functionColor: {
+        color: "#26c8ad"
+    },
+    operationColor: {
+        color: "#b26164"
+    }
 });

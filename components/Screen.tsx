@@ -15,11 +15,15 @@ export default function Screen(props: Props) {
 
 const styles = StyleSheet.create({
     container: {
+        paddingRight: 20,
+        paddingBottom: 5,
+        flexDirection: "column-reverse",
         flex: 0.8,
         backgroundColor: '#22252d',
     },
     buttonText: {
-        fontSize: 22,
+        textAlign: "right",
+        fontSize: 40,
         color: '#fff',
     }
 });
