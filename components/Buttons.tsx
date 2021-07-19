@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { Text } from 'react-native';
+import {Modal, StyleSheet, View, Pressable} from 'react-native';
 import PressableButton from "./Button";
 
 interface Props {
@@ -7,7 +8,9 @@ interface Props {
 }
 
 export default function Buttons({onChange}: Props) {
+    const [modalVisible, setModalVisible] = useState(false);
     const [keys, setKeys] = useState('')
+    const specialKeys = [ '%', '/', '*', '-', '+', '='];
 
     function logPress(key: string) {
         if (key === 'DEL') {
@@ -19,9 +22,19 @@ export default function Buttons({onChange}: Props) {
         } else if (key === 'AC') {
             setKeys('')
             onChange('')
+        } else if (key === '(+/-)') {
+            setKeys("-("+keys+")")
+            onChange("-("+keys+")")
+        } else if (key === '=') {
+            for (let i = 0; i < keys.length; i++) {
+                if (specialKeys.includes(keys[i].toString())){
+                    let val = eval(keys);
+                    setKeys(val)
+                    onChange(val)
+                }
+            }
         } else {
             setKeys((keys) => {
-                    const specialKeys = [ '%', '/', 'x', '-', '+', '='];
                     onChange(keys + key)
                     return keys + key
                 }
@@ -29,8 +42,56 @@ export default function Buttons({onChange}: Props) {
         }
     }
 
+    function historyPress() {
+
+        return (
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text>Hello World!</Text>
+                            <Pressable
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                            </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+        )
+    }
     return (
+
         <View style={styles.buttonComponent}>
+            <View style={styles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={{color: 'white',}}>Hello World!</Text>
+                            <Pressable
+                                style={[styles.button, styles.buttonOpen]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textStyle}>Hide History</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
             <View style={styles.leftSideButtons}>
 
                 {/* AC, DEL, %, ÷ */}
@@ -47,7 +108,7 @@ export default function Buttons({onChange}: Props) {
                 />
 
                 <PressableButton
-                    name="%"
+                    name="(+/-)"
                     styleText={styles.operationColor}
                     onPress={logPress}
 
@@ -74,7 +135,7 @@ export default function Buttons({onChange}: Props) {
                 />
 
                 <PressableButton
-                    name="x"
+                    name="*"
                     styleText={styles.operationColor}
                     onPress={logPress}
                 />
@@ -122,7 +183,7 @@ export default function Buttons({onChange}: Props) {
                 <PressableButton
                     name="H"
                     styleText={styles.functionColor}
-                    onPress={logPress}
+                    onPress={() => setModalVisible(true)}
                 />
 
                 <PressableButton
@@ -145,6 +206,42 @@ export default function Buttons({onChange}: Props) {
 }
 
 const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        height: '90%',
+        width: '90%',
+        margin: 20,
+        backgroundColor: "#22252d",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    buttonOpen: {
+        backgroundColor: "#bf853b",
+    },
     buttonComponent: {
         flex: 1,
         alignItems: 'center',
