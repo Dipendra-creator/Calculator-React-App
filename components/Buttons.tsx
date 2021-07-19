@@ -42,31 +42,6 @@ export default function Buttons({onChange}: Props) {
         }
     }
 
-    function historyPress() {
-
-        return (
-            <View style={styles.centeredView}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text>Hello World!</Text>
-                            <Pressable
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                            </Pressable>
-                        </View>
-                    </View>
-                </Modal>
-            </View>
-        )
-    }
     return (
 
         <View style={styles.buttonComponent}>
