@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text } from 'react-native';
+import {Text} from 'react-native';
 import {Modal, StyleSheet, View, Pressable} from 'react-native';
 import PressableButton from "./Button";
 
@@ -10,8 +10,12 @@ interface Props {
 export default function Buttons({onChange}: Props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [keys, setKeys] = useState('')
-    const specialKeys = [ '%', '/', '*', '-', '+', '='];
+    const specialKeys = ['%', '/', '*', '-', '+'];
 
+
+    const [history, setHistory] = useState<string[]>([])
+
+    // TODO: Gives error if you press any single button too many times continuously
     function logPress(key: string) {
         if (key === 'DEL') {
             setKeys((keys) => {
@@ -23,15 +27,25 @@ export default function Buttons({onChange}: Props) {
             setKeys('')
             onChange('')
         } else if (key === '(+/-)') {
-            setKeys("-("+keys+")")
-            onChange("-("+keys+")")
+            // In case the value is already negative
+            if (keys.startsWith('-(') && keys.endsWith(')')) {
+                setKeys(keys => {
+                    keys = keys.replace('-(', '')
+                    keys = keys.replace(')', '')
+                    onChange(keys)
+                    return keys
+                })
+                return
+            }
+            setKeys("-(" + keys + ")")
+            onChange("-(" + keys + ")")
         } else if (key === '=') {
-            for (let i = 0; i < keys.length; i++) {
-                if (specialKeys.includes(keys[i].toString())){
-                    let val = eval(keys);
-                    setKeys(val)
-                    onChange(val)
-                }
+            // If any of the specialKeys is present in the keys expression
+            if (specialKeys.some(sKey => keys.includes(sKey))) {
+                const val = eval(keys);
+                setKeys(val)
+                onChange(val)
+                setHistory((history) => [...history, `${keys} = ${val}`])
             }
         } else {
             setKeys((keys) => {
@@ -56,7 +70,7 @@ export default function Buttons({onChange}: Props) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={{color: 'white',}}>Hello World!</Text>
+                            {history.map((his, key) => <Text key={key} style={{color: 'white',}}>{his}</Text>)}
                             <Pressable
                                 style={[styles.button, styles.buttonOpen]}
                                 onPress={() => setModalVisible(!modalVisible)}
