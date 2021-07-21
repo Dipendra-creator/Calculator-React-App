@@ -70,7 +70,7 @@ export default function Buttons({onChange}: Props) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            {history.map((his, key) => <Text key={key} style={{color: 'white',}}>{his}</Text>)}
+                            {history.map((his, key) => <Text key={key} style={[styles.history, {color: 'white',}]}>{his}</Text>)}
                             <Pressable
                                 style={[styles.button, styles.buttonOpen]}
                                 onPress={() => setModalVisible(!modalVisible)}
@@ -268,5 +268,16 @@ const styles = StyleSheet.create({
     },
     operationColor: {
         color: "#b26164"
+    },
+    history: {
+        width: "100%",
+        textAlign: "center",
+        margin: 3,
+        padding: 10,
+        fontSize: 24,
+        fontWeight: "bold",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#fff"
     }
 });
