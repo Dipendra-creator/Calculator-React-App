@@ -5,10 +5,17 @@ import Buttons from "./Buttons";
 
 export default function Calculator() {
     const [number, setNumber] = useState('')
+    const [ans, setAns] = useState('')
     return (
         <View style={styles.container}>
-            <Screen text={number}/>
-            <Buttons onChange={(text) => setNumber(text)}/>
+            <Screen text={number} ans={ans}/>
+            <Buttons onChange={(text, ans) => {
+                setNumber(text)
+                if (ans){
+                    setAns(ans)
+                }
+
+            } }/>
         </View>
     );
 }

@@ -3,12 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 
 interface Props {
     text: string
+    ans: string
 }
 
 export default function Screen(props: Props) {
     return (
         <View style={styles.container}>
+            <Text style={styles.buttonText}>{props.ans}</Text>
             <Text style={styles.buttonText}>{props.text}</Text>
+
         </View>
     );
 }

@@ -4,12 +4,14 @@ import {Modal, StyleSheet, View, Pressable} from 'react-native';
 import PressableButton from "./Button";
 
 interface Props {
-    onChange: (arg0: string) => void
+    onChange: (keys: string, ans?: string) => void
+
 }
 
 export default function Buttons({onChange}: Props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [keys, setKeys] = useState('')
+    const [keys, setKeys] = useState('0');
+    const [ans, setAns] = useState('0');
     const specialKeys = ['%', '/', '*', '-', '+'];
 
 
@@ -25,7 +27,8 @@ export default function Buttons({onChange}: Props) {
             )
         } else if (key === 'AC') {
             setKeys('')
-            onChange('')
+            setAns('')
+            onChange('', '0')
         } else if (key === '(+/-)') {
             // In case the value is already negative
             if (keys.startsWith('-(') && keys.endsWith(')')) {
@@ -43,8 +46,9 @@ export default function Buttons({onChange}: Props) {
             // If any of the specialKeys is present in the keys expression
             if (specialKeys.some(sKey => keys.includes(sKey))) {
                 const val = eval(keys);
-                setKeys(val)
-                onChange(val)
+                // setKeys(val)
+                setAns(val)
+                onChange('0', val)
                 setHistory((history) => [...history, `${keys} = ${val}`])
             }
         } else {
