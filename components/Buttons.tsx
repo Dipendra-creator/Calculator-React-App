@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Text} from 'react-native';
 import {Modal, StyleSheet, View, Pressable} from 'react-native';
 import PressableButton from "./Button";
+import { Icon } from 'react-native-elements'
 
 interface Props {
     onChange: (keys: string, ans?: string) => void
@@ -10,8 +11,8 @@ interface Props {
 
 export default function Buttons({onChange}: Props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [keys, setKeys] = useState('0');
-    const [ans, setAns] = useState('0');
+    const [keys, setKeys] = useState('');
+    const [ans, setAns] = useState('');
     const specialKeys = ['%', '/', '*', '-', '+'];
 
 
@@ -48,7 +49,7 @@ export default function Buttons({onChange}: Props) {
                 const val = eval(keys);
                 // setKeys(val)
                 setAns(val)
-                onChange('0', val)
+                onChange('', val)
                 setHistory((history) => [...history, `${keys} = ${val}`])
             }
         } else {
@@ -74,13 +75,14 @@ export default function Buttons({onChange}: Props) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
+                            <Icon
+                                iconStyle={styles.icon}
+                                size={40}
+                                name='close'
+                                type='font-awesome'
+                                color='#fff'
+                                onPress={() => setModalVisible(!modalVisible)} />
                             {history.map((his, key) => <Text key={key} style={[styles.history, {color: 'white',}]}>{his}</Text>)}
-                            <Pressable
-                                style={[styles.button, styles.buttonOpen]}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={styles.textStyle}>Hide History</Text>
-                            </Pressable>
                         </View>
                     </View>
                 </Modal>
@@ -212,6 +214,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#22252d",
         borderRadius: 20,
         padding: 35,
+        paddingTop: 10,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -283,5 +286,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 2,
         borderColor: "#fff"
+    },
+    icon: {
+        marginBottom: 20
     }
 });
